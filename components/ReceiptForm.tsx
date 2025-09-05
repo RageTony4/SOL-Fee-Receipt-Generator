@@ -1,7 +1,27 @@
-
 import React from 'react';
 import type { ReceiptData, SchoolInfo } from '../types';
 import { UploadIcon } from './Icons';
+
+// --- Helper Component ---
+// Moved outside of ReceiptForm to prevent re-creation on every render, which causes focus loss.
+const InputField: React.FC<{
+  name: keyof ReceiptData;
+  label: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}> = ({ name, label, value, onChange }) => (
+  <div>
+    <label htmlFor={name} className="block text-sm font-medium text-gray-400 mb-1">{label}</label>
+    <input
+      type="text"
+      id={name}
+      name={name}
+      value={value}
+      onChange={onChange}
+      className="bg-gray-700 border border-gray-600 text-gray-200 p-2 rounded-lg w-full text-sm transition-colors focus:outline-none focus:border-indigo-500"
+    />
+  </div>
+);
 
 interface ReceiptFormProps {
   receiptData: ReceiptData;
@@ -47,20 +67,6 @@ const ReceiptForm: React.FC<ReceiptFormProps> = ({ receiptData, setReceiptData, 
   };
 
 
-  const InputField: React.FC<{ name: keyof ReceiptData, label: string }> = ({ name, label }) => (
-    <div>
-        <label htmlFor={name} className="block text-sm font-medium text-gray-400 mb-1">{label}</label>
-        <input 
-            type="text" 
-            id={name} 
-            name={name} 
-            value={receiptData[name]} 
-            onChange={handleReceiptChange} 
-            className="bg-gray-700 border border-gray-600 text-gray-200 p-2 rounded-lg w-full text-sm transition-colors focus:outline-none focus:border-indigo-500"
-        />
-    </div>
-  );
-
   return (
     <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
       
@@ -90,10 +96,10 @@ const ReceiptForm: React.FC<ReceiptFormProps> = ({ receiptData, setReceiptData, 
       <fieldset className="border border-gray-700 p-4 rounded-lg">
         <legend className="text-xl font-semibold text-indigo-400 px-2">Student Details</legend>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <InputField name="name" label="Full Name" />
-            <InputField name="fatherName" label="Father's Name" />
-            <InputField name="motherName" label="Mother's Name" />
-            <InputField name="sex" label="Sex" />
+            <InputField name="name" label="Full Name" value={receiptData.name} onChange={handleReceiptChange} />
+            <InputField name="fatherName" label="Father's Name" value={receiptData.fatherName} onChange={handleReceiptChange} />
+            <InputField name="motherName" label="Mother's Name" value={receiptData.motherName} onChange={handleReceiptChange} />
+            <InputField name="sex" label="Sex" value={receiptData.sex} onChange={handleReceiptChange} />
             <div className="sm:col-span-2">
                 <label htmlFor="mailingAddress" className="block text-sm font-medium text-gray-400 mb-1">Mailing Address</label>
                 <textarea id="mailingAddress" name="mailingAddress" value={receiptData.mailingAddress} onChange={handleReceiptChange} rows={3} className="bg-gray-700 border border-gray-600 text-gray-200 p-2 rounded-lg w-full text-sm transition-colors focus:outline-none focus:border-indigo-500"></textarea>
@@ -113,7 +119,7 @@ const ReceiptForm: React.FC<ReceiptFormProps> = ({ receiptData, setReceiptData, 
       <fieldset className="border border-gray-700 p-4 rounded-lg">
         <legend className="text-xl font-semibold text-indigo-400 px-2">Receipt Numbers & Dates</legend>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            <InputField name="barcodeNo" label="Barcode No." />
+            <InputField name="barcodeNo" label="Barcode No." value={receiptData.barcodeNo} onChange={handleReceiptChange} />
             <div className="sm:col-span-2">
                 <label className="block text-sm font-medium text-gray-400 mb-1">Barcode Image (Optional)</label>
                 <div className="flex items-center gap-2">
@@ -142,12 +148,12 @@ const ReceiptForm: React.FC<ReceiptFormProps> = ({ receiptData, setReceiptData, 
                     )}
                 </div>
             </div>
-            <InputField name="receiptNo" label="Receipt No." />
-            <InputField name="solRollNo" label="SOL Roll No." />
-            <InputField name="refNo" label="Reference No." />
-            <InputField name="dateOfBirth" label="Date of Birth" />
-            <InputField name="date" label="Receipt Date" />
-            <InputField name="phoneNo" label="Phone No." />
+            <InputField name="receiptNo" label="Receipt No." value={receiptData.receiptNo} onChange={handleReceiptChange} />
+            <InputField name="solRollNo" label="SOL Roll No." value={receiptData.solRollNo} onChange={handleReceiptChange} />
+            <InputField name="refNo" label="Reference No." value={receiptData.refNo} onChange={handleReceiptChange} />
+            <InputField name="dateOfBirth" label="Date of Birth" value={receiptData.dateOfBirth} onChange={handleReceiptChange} />
+            <InputField name="date" label="Receipt Date" value={receiptData.date} onChange={handleReceiptChange} />
+            <InputField name="phoneNo" label="Phone No." value={receiptData.phoneNo} onChange={handleReceiptChange} />
         </div>
         <div className="mt-4">
             <button
