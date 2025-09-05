@@ -1,0 +1,5 @@
+{
+  "name": "SOL Fee Receipt Generator",
+  "description": "An application to generate a customized university fee receipt based on a template. Users can input their details, customize school information and logo, and generate a new receipt for preview and download as a PNG or PDF.",
+  "requestFramePermissions": []
+}
