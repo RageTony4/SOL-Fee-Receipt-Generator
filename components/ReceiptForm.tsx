@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { ReceiptData, SchoolInfo } from '../types';
 import { UploadIcon } from './Icons';
@@ -71,10 +72,10 @@ const ReceiptForm: React.FC<ReceiptFormProps> = ({ receiptData, setReceiptData, 
     <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
       
       <fieldset className="border border-gray-700 p-4 rounded-lg">
-        <legend className="text-xl font-semibold text-indigo-400 px-2">School Details</legend>
+        <legend className="text-xl font-semibold text-indigo-400 px-2">College Details</legend>
         <div className="space-y-4">
             <div>
-                 <label htmlFor="logo-upload" className="block text-sm font-medium text-gray-400 mb-1">School Logo</label>
+                 <label htmlFor="logo-upload" className="block text-sm font-medium text-gray-400 mb-1">College Logo</label>
                  <label htmlFor="logo-upload" className="relative flex items-center gap-4 w-full p-2 text-center border rounded-lg cursor-pointer border-gray-600 hover:border-indigo-500 bg-gray-700/50">
                     <img src={schoolInfo.logo} alt="School Logo" className="w-10 h-10 object-contain bg-white rounded-full p-1"/>
                     <span className="text-sm text-gray-300">Click to upload new logo</span>
@@ -82,8 +83,12 @@ const ReceiptForm: React.FC<ReceiptFormProps> = ({ receiptData, setReceiptData, 
                  </label>
             </div>
             <div>
-                <label htmlFor="schoolName" className="block text-sm font-medium text-gray-400 mb-1">School Name</label>
+                <label htmlFor="schoolName" className="block text-sm font-medium text-gray-400 mb-1">College Name</label>
                 <input type="text" id="schoolName" name="name" value={schoolInfo.name} onChange={handleSchoolChange} className="bg-gray-700 border border-gray-600 text-gray-200 p-2 rounded-lg w-full text-sm transition-colors focus:outline-none focus:border-indigo-500" />
+            </div>
+             <div>
+                <label htmlFor="affiliation" className="block text-sm font-medium text-gray-400 mb-1">Affiliation</label>
+                <input type="text" id="affiliation" name="affiliation" value={schoolInfo.affiliation} onChange={handleSchoolChange} className="bg-gray-700 border border-gray-600 text-gray-200 p-2 rounded-lg w-full text-sm transition-colors focus:outline-none focus:border-indigo-500" />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                  <input type="text" name="address1" placeholder="Address Line 1" value={schoolInfo.address1} onChange={handleSchoolChange} className="bg-gray-700 border border-gray-600 text-gray-200 p-2 rounded-lg w-full text-sm transition-colors focus:outline-none focus:border-indigo-500" />
@@ -149,7 +154,7 @@ const ReceiptForm: React.FC<ReceiptFormProps> = ({ receiptData, setReceiptData, 
                 </div>
             </div>
             <InputField name="receiptNo" label="Receipt No." value={receiptData.receiptNo} onChange={handleReceiptChange} />
-            <InputField name="solRollNo" label="SOL Roll No." value={receiptData.solRollNo} onChange={handleReceiptChange} />
+            <InputField name="enrollmentNo" label="Enrollment No." value={receiptData.enrollmentNo} onChange={handleReceiptChange} />
             <InputField name="refNo" label="Reference No." value={receiptData.refNo} onChange={handleReceiptChange} />
             <InputField name="dateOfBirth" label="Date of Birth" value={receiptData.dateOfBirth} onChange={handleReceiptChange} />
             <InputField name="date" label="Receipt Date" value={receiptData.date} onChange={handleReceiptChange} />

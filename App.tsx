@@ -60,8 +60,9 @@ const generateRandomPhone = (): string => {
 const firstNames = ['Amit', 'Sunita', 'Rajesh', 'Priya', 'Vikram', 'Anjali', 'Sanjay', 'Pooja', 'Deepak', 'Neha', 'Rohan', 'Kavita'];
 const femaleFirstNames = ['Sunita', 'Priya', 'Anjali', 'Pooja', 'Neha', 'Kavita', 'Meena', 'Rani', 'Sita', 'Gita'];
 const lastNames = ['Sharma', 'Gupta', 'Singh', 'Kumar', 'Verma', 'Patel', 'Jain', 'Mehta', 'Chauhan', 'Yadav', 'Malhotra', 'Kapoor'];
-const streetNames = ['Gandhi Marg', 'Nehru Road', 'Patel Nagar', 'Shastri Park', 'Lajpat Nagar', 'Subhash Galli', 'Azad Lane'];
-const localities = ['Karol Bagh', 'Chandni Chowk', 'Connaught Place', 'Mayur Vihar', 'Dwarka', 'Rohini', 'Saket'];
+const streetNames = ['Main Road', 'Knowledge Park Road', 'Surajpur-Kasna Road', 'Yamuna Expressway Service Road'];
+const localities = ['Alpha Commercial Belt', 'Knowledge Park II', 'Sector 18', 'Sector 62', 'Pari Chowk'];
+const pinCodes = ['201306', '201308', '201310'];
 
 const getRandomElement = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
@@ -74,38 +75,40 @@ const generateRandomAddress = (): string => {
     const houseNo = `H.No. ${Math.floor(Math.random() * 200) + 1}`;
     const street = getRandomElement(streetNames);
     const locality = getRandomElement(localities);
-    const pinCode = `1100${Math.floor(Math.random() * 90) + 10}`;
-    return `${houseNo}, ${street}, ${locality}, DELHI - ${pinCode}`;
+    const pinCode = getRandomElement(pinCodes);
+    return `${houseNo}, ${street}, ${locality}, GREATER NOIDA - ${pinCode}`;
 };
 
+const lawCourses = ['B.A. LL.B. - 1st Year', 'B.A. LL.B. - 2nd Year', 'B.A. LL.B. - 3rd Year', 'LL.B. - 1st Year', 'LL.B. - 2nd Year'];
 
 const createInitialReceiptData = (): ReceiptData => {
     const recentDate = formatDate(generateRecentDate());
     const isMale = Math.random() > 0.5;
+    const currentYear = new Date().getFullYear();
     return {
-        barcodeNo: modifyNumericId('565823', 4),
-        receiptNo: modifyNumericId('25-06-876823', 5),
-        course: 'B.Com. - I',
+        barcodeNo: modifyNumericId('789123', 4),
+        receiptNo: `LLC/${currentYear}/${generateRandomNumberString(6)}`,
+        course: getRandomElement(lawCourses),
         medium: 'English',
-        user: modifyNumericId('200982', 3),
+        user: modifyNumericId('202382', 3),
         sex: isMale ? 'Male' : 'Female',
         date: recentDate,
-        solRollNo: `25-6-02-${generateRandomNumberString(6)}`,
-        examCentre: 'DELHI (WEST Zone)',
+        enrollmentNo: `LLC${generateRandomNumberString(7)}`,
+        campus: 'Greater Noida Campus',
         dateOfBirth: generateRandomDOB(),
-        subjectOffered: 'Part I: BUSINESS ORGANISATION AND MANAGEMENT (A101);FINANCIAL ACCOUNTING (A102);BUSINESS AND INDUSTRIAL LAWS (A103);ECONOMICS PAPER1 PRINCIPLE OF ECONOMICS (A104);HINDI-B (A108)',
-        payMode: 'DD',
-        refNo: modifyNumericId('345266734', 5),
+        subjectOffered: 'Part I: CONSTITUTIONAL LAW; LAW OF TORTS; CONTRACT LAW; LEGAL METHODS; POLITICAL SCIENCE',
+        payMode: 'Online Transfer',
+        refNo: modifyNumericId('456123789', 5),
         dateOfIssue: recentDate,
-        bank: 'SBI-DD-DU',
-        amount: '3465',
-        amountInWords: '(Rupees Three Thousand Four Hundred Sixty-Five And Zero Paise Only)',
+        bank: 'HDFC Bank',
+        amount: '185500',
+        amountInWords: '(Rupees One Lakh Eighty-Five Thousand Five Hundred And Zero Paise Only)',
         // User-provided fields
         name: generateRandomName(!isMale),
         fatherName: generateRandomName(false),
         motherName: generateRandomName(true),
         mailingAddress: generateRandomAddress(),
-        emailId: 'firstname25602048878@sol.du.ac.in',
+        emailId: 'student.placeholder@lloydlawcollege.edu.in',
         phoneNo: generateRandomPhone(),
         barcodeImage: null,
     };
@@ -115,11 +118,12 @@ const createInitialReceiptData = (): ReceiptData => {
 const App: React.FC = () => {
   const [receiptData, setReceiptData] = useState<ReceiptData>(createInitialReceiptData());
   const [schoolInfo, setSchoolInfo] = useState<SchoolInfo>({
-      name: 'School of Open Learning',
-      address1: '(Campus of Open Learning)',
-      address2: 'University of Delhi',
-      address3: 'Delhi-110007',
-      logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/University_of_Delhi.svg/1200px-University_of_Delhi.svg.png',
+      name: 'Lloyd Law College',
+      address1: 'Plot No. 11, Knowledge Park-II',
+      address2: 'Greater Noida, Uttar Pradesh',
+      address3: 'Pin: 201306',
+      logo: 'https://www.lloydlawcollege.edu.in/images/lloyd-law-college-logo.png',
+      affiliation: 'Affiliated to Chaudhary Charan Singh University, Meerut',
   });
 
   const receiptRef = useRef<HTMLDivElement>(null);
@@ -133,7 +137,7 @@ const App: React.FC = () => {
         receiptNo: freshData.receiptNo,
         user: freshData.user,
         date: freshData.date,
-        solRollNo: freshData.solRollNo,
+        enrollmentNo: freshData.enrollmentNo,
         dateOfBirth: freshData.dateOfBirth,
         refNo: freshData.refNo,
         dateOfIssue: freshData.dateOfIssue,
@@ -158,13 +162,13 @@ const App: React.FC = () => {
     // Effect to update derived fields like email
     const nameParts = receiptData.name.split(' ');
     const firstName = nameParts[0]?.toLowerCase() || 'student';
-    const cleanRollNo = receiptData.solRollNo.replace(/-/g, '');
-    const newEmail = `${firstName}${cleanRollNo}@sol.du.ac.in`;
+    const cleanEnrollmentNo = receiptData.enrollmentNo.replace(/-/g, '');
+    const newEmail = `${firstName}.${cleanEnrollmentNo}@lloydlawcollege.edu.in`;
     
     if (newEmail !== receiptData.emailId) {
         setReceiptData(prev => ({ ...prev, emailId: newEmail }));
     }
-  }, [receiptData.name, receiptData.solRollNo]);
+  }, [receiptData.name, receiptData.enrollmentNo]);
 
 
   const handleDownload = async (format: 'png' | 'pdf') => {
@@ -172,14 +176,13 @@ const App: React.FC = () => {
     
     window.scrollTo(0, 0);
 
-    // FIX: The 'letterRendering' property is not a valid option for html2canvas and has been removed.
     const canvas = await html2canvas(receiptRef.current, {
       scale: 2,
       useCORS: true,
       backgroundColor: '#ffffff',
     });
 
-    const filename = `${receiptData.solRollNo}.${format}`;
+    const filename = `${receiptData.enrollmentNo}.${format}`;
 
     if (format === 'png') {
       const dataUrl = canvas.toDataURL('image/png');

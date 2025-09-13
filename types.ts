@@ -8,9 +8,9 @@ export interface ReceiptData {
   sex: string;
   date: string;
   name: string;
-  solRollNo: string;
+  enrollmentNo: string;
   fatherName: string;
-  examCentre: string;
+  campus: string;
   motherName: string;
   dateOfBirth: string;
   mailingAddress: string;
@@ -32,4 +32,5 @@ export interface SchoolInfo {
     address2: string;
     address3: string;
     logo: string;
+    affiliation: string;
 }
