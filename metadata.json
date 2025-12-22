@@ -1,5 +1,5 @@
 {
-  "name": "Lloyd Law College Fee Receipt Generator",
-  "description": "An application to generate a customized Lloyd Law College fee receipt. Users can input their details, customize college information and logo, and generate a new receipt for preview and download as a PNG or PDF.",
+  "name": "Tuition Fee Receipt Generator",
+  "description": "A tool to generate a professional and detailed university tuition fee receipt for remote learning students. Users can customize student and university details, charges, payments, and important dates, then download the receipt as a PNG or PDF.",
   "requestFramePermissions": []
 }

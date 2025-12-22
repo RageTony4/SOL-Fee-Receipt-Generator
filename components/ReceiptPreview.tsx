@@ -1,139 +1,212 @@
-
 import React, { forwardRef } from 'react';
-import type { ReceiptData, SchoolInfo } from '../types';
-
-// Base64 encoded background texture to prevent cross-origin loading issues.
-const backgroundTexture = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJwAAACcCAYAAADqF8MjAAAA/UlEQVR42u3RoQEAAAgDoGly/z426ECgZgE+25sA5wR4E2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k2AuBbiTYC4FeBNgLgW4k-wYAAAADklEQVR42mP8/58BDABi5AKfC4XEdAAAAABJRU5ErkJggg==';
+import type { ReceiptData, UniversityInfo } from '../types';
 
 interface ReceiptPreviewProps {
   data: ReceiptData;
-  schoolInfo: SchoolInfo;
+  universityInfo: UniversityInfo;
+  currency: 'INR' | 'USD' | 'GBP' | 'KES' | 'ILS';
+  locale: 'en-IN' | 'en-US' | 'en-GB' | 'en-KE' | 'en-IL';
 }
 
-const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ data, schoolInfo }, ref) => {
+const InfoItem: React.FC<{ label: string; value: string; className?: string }> = ({ label, value, className = '' }) => (
+    <div className={`flex flex-nowrap items-start mb-1.5 ${className}`}>
+        <p className="font-bold uppercase w-48 flex-shrink-0 text-sm tracking-wide">{label}:</p>
+        <p className="uppercase break-words text-sm">{value}</p>
+    </div>
+);
 
-  const DetailRow: React.FC<{ label: string; value: string | undefined }> = ({ label, value }) => (
-    <>
-      <div className="font-bold text-xs whitespace-nowrap">{label}</div>
-      <div className="text-xs">:</div>
-      <div className="text-xs break-words">{value || ''}</div>
-    </>
-  );
+const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ data, universityInfo, currency, locale }, ref) => {
+
+    const newChargesTotal = data.charges.reduce((acc, charge) => acc + (charge.quantity * charge.unitCost), 0);
+    const paymentsTotal = data.payments.reduce((acc, p) => acc + p.amount, 0);
+    const totalAmountDue = data.previousBalance + newChargesTotal - paymentsTotal;
+
+    const formatCurrency = (amount: number): string => {
+        try {
+            return new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(amount);
+        } catch (e) {
+            return `${currency} ${amount.toFixed(2)}`;
+        }
+    };
+
+    const formatDate = (dateString: string): string => {
+        if (!dateString) return '';
+        try {
+            return new Date(`${dateString}T00:00:00`).toLocaleDateString(locale, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            });
+        } catch (e) {
+            return dateString;
+        }
+    };
 
   return (
-    <div ref={ref} className="bg-white text-black p-6 receipt-font w-[210mm] min-h-[297mm] mx-auto" style={{boxSizing: 'border-box', letterSpacing: 'normal', wordSpacing: 'normal'}}>
-      <div className="relative border-2 border-black p-4 h-full" style={{backgroundImage: `url('${backgroundTexture}')`, backgroundBlendMode: 'soft-light', backgroundColor: 'rgba(255, 255, 255, 0.9)'}}>
+    <div ref={ref} className="bg-white text-black p-8 statement-font w-[210mm] min-h-[297mm] mx-auto text-sm flex flex-col shadow-2xl" style={{boxSizing: 'border-box'}}>
       
-      <div className="absolute inset-4 bg-white opacity-95" style={{
-          backgroundImage: `url(${schoolInfo.logo})`,
-          backgroundRepeat: 'no-repeat', 
-          backgroundPosition: 'center', 
-          backgroundSize: 'contain',
-          opacity: 0.1,
-      }}></div>
-      
-      <div className="relative z-10">
-        <header className="text-center mb-4">
-            <div className="flex justify-center items-center gap-4">
-                <img src={schoolInfo.logo} alt="School Logo" className="w-16 h-16 object-contain"/>
-                <div>
-                    <h1 className="text-xl font-bold">{schoolInfo.name}</h1>
-                    <p className="text-sm font-semibold">{schoolInfo.affiliation}</p>
-                    <p className="text-sm">{schoolInfo.address1}</p>
-                    <p className="text-sm">{schoolInfo.address2}, {schoolInfo.address3}</p>
-                </div>
-            </div>
-            <h2 className="text-lg font-bold underline mt-4">Fee Receipt</h2>
+      <div className="flex-grow">
+        {/* Header */}
+        <header className="flex justify-between items-start pb-4 border-b-2 border-gray-800">
+          <div className="max-w-[60%]">
+            <h1 className="text-3xl font-bold text-gray-800 leading-tight">{universityInfo.name}</h1>
+            <p className="text-gray-600 mt-1">{universityInfo.address1}</p>
+            <p className="text-gray-600">{universityInfo.address2}</p>
+            <p className="text-gray-600">{universityInfo.address3}</p>
+          </div>
+          <div className="text-right flex flex-col items-end">
+             <img src={universityInfo.logo} alt="University Logo" className="w-24 h-24 object-contain mb-2"/>
+             <h2 className="text-2xl font-bold text-gray-700">Tuition Fee Receipt</h2>
+             <p className="font-semibold text-gray-500 mt-1">Receipt #: {data.receiptNumber}</p>
+          </div>
         </header>
-
-        {/* Barcode and Receipt No */}
-        <div className="flex justify-between items-start mb-4">
-            <div className="flex flex-col items-center">
-                {data.barcodeImage ? (
-                    <img src={data.barcodeImage} alt="Barcode" className="h-10 object-contain" style={{maxWidth: '200px'}} />
-                ) : (
-                    /* Simulated Barcode */
-                    <div className="flex items-end h-10">
-                        {[...Array(40)].map((_, i) => (
-                            <div key={i} className="bg-black" style={{ width: `${Math.random() * 2 + 0.5}px`, height: `${Math.random() * 30 + 10}px` }}></div>
-                        ))}
-                    </div>
-                )}
-                <div className="grid grid-cols-[auto_auto_1fr] gap-x-2 text-xs mt-1">
-                    <span className="font-bold">Barcode No</span>
-                    <span>:</span>
-                    <span>{data.barcodeNo}</span>
+        
+        {/* Student Info */}
+        <section className="my-6">
+            <div className="grid grid-cols-2 gap-x-8">
+                <div>
+                    <InfoItem label="Student Name" value={data.studentName} />
+                    <InfoItem label="Programme" value={data.programOfStudy} />
+                    <InfoItem label="Department" value={data.department} />
+                    <InfoItem label="School/Faculty" value={data.schoolFaculty} />
+                </div>
+                <div>
+                    <InfoItem label="Reg No" value={data.studentId} />
+                    <InfoItem label="Admission Year" value={data.admissionYear} />
+                    <InfoItem label="Graduation Year" value={data.graduationYear} />
+                    <InfoItem label="Year of Study" value={data.yearOfStudy} />
                 </div>
             </div>
-            <div className="grid grid-cols-[auto_auto_1fr] gap-x-2 text-xs">
-                <span className="font-bold">Receipt No</span>
-                <span>:</span>
-                <span>{data.receiptNo}</span>
+        </section>
+        
+        {/* Billing Info & Summary */}
+        <section className="grid grid-cols-2 gap-x-8 gap-y-4 my-6">
+            <div>
+                <h3 className="font-bold text-gray-500 uppercase tracking-wider text-xs mb-2">Billing Information</h3>
+                <p><span className="font-semibold">Email ID:</span> {data.emailId}</p>
+                <p><span className="font-semibold">Modality:</span> {data.learningModality}</p>
+                <p className="mt-2 text-gray-600 whitespace-pre-line leading-relaxed">{data.billingAddress}</p>
             </div>
-        </div>
+            <div className="bg-gray-100 p-4 rounded-lg">
+                <h3 className="font-bold text-gray-500 uppercase tracking-wider text-xs mb-3">Account Summary</h3>
+                <div className="space-y-2">
+                    <div className="flex justify-between"><span>Previous Balance:</span> <span>{formatCurrency(data.previousBalance)}</span></div>
+                    <div className="flex justify-between"><span>New Charges:</span> <span>{formatCurrency(newChargesTotal)}</span></div>
+                    <div className="flex justify-between border-b border-gray-300 pb-2"><span>Payments & Credits:</span> <span>({formatCurrency(paymentsTotal)})</span></div>
+                    <div className="flex justify-between font-bold text-lg pt-1"><span>Total Amount Due:</span> <span>{formatCurrency(totalAmountDue)}</span></div>
+                </div>
+            </div>
+        </section>
 
-        {/* Student Details */}
-        <div className="grid grid-cols-2 gap-x-8 gap-y-1 text-sm mb-4">
-            <div className="grid grid-cols-[100px_auto_1fr] gap-x-2">
-                <DetailRow label="Course" value={data.course} />
-                <DetailRow label="Name" value={data.name} />
-                <DetailRow label="Father's Name" value={data.fatherName} />
-                <DetailRow label="Mother's Name" value={data.motherName} />
-                <DetailRow label="Mailing Address" value={data.mailingAddress} />
-                <DetailRow label="Email Id" value={data.emailId} />
-            </div>
-            <div className="grid grid-cols-[100px_auto_1fr] gap-x-2">
-                <DetailRow label="Medium" value={data.medium} />
-                <DetailRow label="User" value={data.user} />
-                <DetailRow label="Sex" value={data.sex} />
-                <DetailRow label="Date" value={data.date} />
-                <DetailRow label="Enrollment No." value={data.enrollmentNo} />
-                <DetailRow label="Campus" value={data.campus} />
-                <DetailRow label="Date of Birth" value={data.dateOfBirth} />
-                <DetailRow label="Phone No" value={data.phoneNo} />
-            </div>
-        </div>
+        {/* Detailed Charges */}
+        <section className="mb-6">
+            <h3 className="text-xl font-bold border-b border-gray-400 pb-1 mb-2">Detailed Charges</h3>
+            <table className="w-full table-auto text-left">
+                <thead>
+                    <tr className="border-b border-gray-300">
+                        <th className="py-2">Description</th>
+                        <th className="py-2 text-center">Qty</th>
+                        <th className="py-2">Unit</th>
+                        <th className="py-2 text-right">Unit Cost</th>
+                        <th className="py-2 text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.charges.length > 0 ? data.charges.map((charge, index) => (
+                        <tr key={index} className="border-b border-gray-200">
+                            <td className="py-2 text-gray-900">{charge.description}</td>
+                            <td className="py-2 text-center text-gray-900">{charge.quantity}</td>
+                            <td className="py-2 text-gray-900">{charge.unit}</td>
+                            <td className="py-2 text-right text-gray-900">{formatCurrency(charge.unitCost)}</td>
+                            <td className="py-2 text-right font-medium text-gray-900">{formatCurrency(charge.quantity * charge.unitCost)}</td>
+                        </tr>
+                    )) : (
+                        <tr>
+                            <td colSpan={5} className="text-center py-4 text-gray-500 italic">No charges for this period.</td>
+                        </tr>
+                    )}
+                </tbody>
+                <tfoot>
+                    <tr className="font-bold">
+                        <td colSpan={4} className="py-3 text-right">Total New Charges:</td>
+                        <td className="py-3 text-right">{formatCurrency(newChargesTotal)}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
 
-        {/* Subject Offered */}
-        <div className="grid grid-cols-[118px_1fr] gap-x-2 text-sm mb-4">
-            <div className="font-bold text-xs">Subject Offered :</div>
-            <div className="text-xs break-words">{data.subjectOffered}</div>
-        </div>
+        {/* Payments & Credits */}
+        <section className="mb-6">
+             <h3 className="text-xl font-bold border-b border-gray-400 pb-1 mb-2">Payments & Account Activity</h3>
+             <table className="w-full table-auto text-left">
+                <thead>
+                    <tr className="border-b border-gray-300">
+                        <th className="py-2 w-2/3">Description</th>
+                        <th className="py-2 text-center">Date</th>
+                        <th className="py-2 text-right">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.payments.length > 0 ? data.payments.map((payment, index) => (
+                        <tr key={index} className="border-b border-gray-200">
+                            <td className="py-2 text-gray-900">{payment.description}</td>
+                            <td className="py-2 text-center text-gray-900">{formatDate(payment.date)}</td>
+                            <td className="py-2 text-right text-gray-900">{formatCurrency(payment.amount)}</td>
+                        </tr>
+                    )) : (
+                         <tr>
+                            <td colSpan={3} className="text-center py-4 text-gray-500 italic">No payments or credits for this period.</td>
+                        </tr>
+                    )}
+                </tbody>
+                <tfoot>
+                    <tr className="font-bold">
+                        <td colSpan={2} className="py-3 text-right">Total Payments/Credits:</td>
+                        <td className="py-3 text-right">{formatCurrency(paymentsTotal)}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+        
+        {/* Verification of Remote Learning */}
+        {data.learningModality === 'Online/Remote' && (
+            <section className="mt-8 pt-4 border-t border-gray-300 text-xs text-gray-700">
+                <h4 className="font-bold text-gray-800 uppercase tracking-wider mb-2">Verification of Remote Learning</h4>
+                <p className="italic leading-relaxed">
+                    This receipt serves to confirm that {data.studentName} (ID: {data.studentId}) is enrolled in the {data.programOfStudy} at {universityInfo.name} for the period covered by this receipt, with their primary mode of instruction designated as {data.learningModality}. 
+                    This receipt reflects charges and payments associated with their remote learning program.
+                </p>
+                <div className="mt-8 text-right">
+                    <div className="inline-block text-center">
+                        <p className="border-t border-gray-400 pt-2 px-8 font-semibold">{universityInfo.onlineProgramDirector}</p>
+                    </div>
+                </div>
+            </section>
+        )}
 
-        {/* Payment Details */}
-        <div className="mt-6">
-            <h3 className="text-md font-bold underline mb-2">Payment Details</h3>
-            <div className="grid grid-cols-5 gap-4 border-t-2 border-b-2 border-black py-2 text-xs font-bold text-center">
-                <div>Pay Mode</div>
-                <div>Refe.No.</div>
-                <div>Date of Issue</div>
-                <div>Bank</div>
-                <div>Amount</div>
-            </div>
-            <div className="grid grid-cols-5 gap-4 py-2 text-xs text-center">
-                <div>{data.payMode}</div>
-                <div>{data.refNo}</div>
-                <div>{data.dateOfIssue}</div>
-                <div>{data.bank}</div>
-                <div className="font-bold">{data.amount}</div>
-            </div>
-            <div className="flex justify-between items-center border-t-2 border-black pt-2">
-              <span className="text-xs italic">{data.amountInWords}</span>
-              <span className="text-xs font-bold">{data.amount}</span>
-            </div>
-        </div>
-
-        {/* Notes */}
-        <div className="mt-8 text-xs space-y-2 leading-relaxed">
-            <p className="break-words"><span className="font-bold">Note1:</span> Admission is provisional and subject to verification of original documents by the Lloyd Law College administration. This is a computer-generated receipt and does not require a signature. For any discrepancies, please contact the accounts department.</p>
-            <p className="break-words"><span className="font-bold">Note2:</span> This receipt must be presented upon request. Please refer to the college prospectus for rules regarding fee payment deadlines and late fees.</p>
-        </div>
-
-        <div className="absolute bottom-4 left-4 right-4 text-xs mt-10 text-center border-t border-dashed border-black pt-2 break-words">
-          Please note that in future you will get all information through Mail <span className="font-semibold">{data.emailId}</span> and Phone No <span className="font-semibold">{data.phoneNo}</span>
-        </div>
       </div>
-      </div>
+
+      {/* Footer */}
+      <footer className="pt-4 mt-auto border-t-2 border-gray-800 text-xs">
+          <div className="grid grid-cols-2 gap-8">
+            <div>
+              <h4 className="font-bold uppercase tracking-wider mb-2">Important Dates</h4>
+              <p><span className="font-semibold">Receipt Date:</span> {formatDate(data.receiptDate)}</p>
+              <p className="text-red-600 font-bold"><span className="font-semibold">Payment Due Date:</span> {formatDate(data.dueDate)}</p>
+              <p><span className="font-semibold">Late Fee Application:</span> {formatDate(data.lateFeeDate)}</p>
+            </div>
+            <div>
+              <h4 className="font-bold uppercase tracking-wider mb-2">Payment Methods</h4>
+              <p>Pay online at: <a href={data.paymentPortalUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{data.paymentPortalUrl}</a></p>
+              <p>{data.billingOfficeInfo}</p>
+            </div>
+          </div>
+          <div className="mt-4 pt-2 border-t border-gray-300 text-center text-gray-500">
+            <p>{data.supportContact}</p>
+            <p className="italic">{data.confidentialityNotice}</p>
+          </div>
+      </footer>
+
     </div>
   );
 });
