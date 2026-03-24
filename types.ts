@@ -1,4 +1,3 @@
-
 export interface ChargeItem {
     description: string;
     quantity: number;
@@ -27,6 +26,9 @@ export interface ReceiptData {
     graduationYear: string;
     yearOfStudy: string;
     courseStartDate: string;
+    currentEnrollmentTerm: string;
+    currentTerm: string;
+    enrollmentStatus: string;
     billingAddress: string;
     learningModality: 'Online/Remote' | 'Hybrid' | 'In-Person';
 
@@ -62,15 +64,4 @@ export interface VerificationResult {
     studentNameCheck: { verified: boolean; feedback: string };
     universityInfoCheck: { verified: boolean; feedback: string };
     dateCheck: { verified: boolean; feedback: string };
-}
-
-export interface UniversityPreset {
-    id: string;
-    name: string;
-    info: UniversityInfo;
-    createInitialData: () => ReceiptData;
-    createRandomData: () => ReceiptData;
-    currency: 'INR' | 'USD' | 'GBP' | 'KES' | 'ILS';
-    locale: 'en-IN' | 'en-US' | 'en-GB' | 'en-KE' | 'en-IL';
-    duration: number;
 }
