@@ -185,27 +185,8 @@ const App: React.FC = () => {
 
           <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col items-center justify-start overflow-hidden">
               <h2 className="text-2xl font-bold mb-4 text-center">Receipt Preview</h2>
-              <div ref={previewContainerRef} className="relative w-full flex-grow bg-gray-900/50 rounded-xl border border-gray-700 overflow-y-auto flex items-start justify-center p-8 min-h-[600px] max-h-[850px]">
-                 {/* Scaling wrapper to fit A4 (210mm wide) into the UI */}
-                 <div style={{ width: `calc(210mm * ${previewScale})`, height: `calc(297mm * ${previewScale})` }}>
-                    <div className="origin-top-left transition-transform duration-300 ease-in-out" style={{ transform: `scale(${previewScale})` }}>
-                        <div className="shadow-2xl">
-                            <ReceiptPreview 
-                                ref={receiptRef} 
-                                data={receiptData} 
-                                universityInfo={universityInfo} 
-                                currency={activePreset.currency as any}
-                                locale={activePreset.locale as any}
-                            />
-                        </div>
-                    </div>
-                 </div>
-                 
-                 <div className="absolute bottom-4 right-4 bg-gray-800/80 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] text-gray-400 border border-gray-700 pointer-events-none">
-                    Preview Scale: {Math.round(previewScale * 100)}%
-                 </div>
-              </div>
-              <div className="mt-8 flex justify-center items-center gap-4 flex-wrap w-full">
+              
+              <div className="mb-6 flex justify-center items-center gap-4 flex-wrap w-full">
                 <button
                   onClick={handleVerify}
                   disabled={isVerifying}
@@ -228,6 +209,27 @@ const App: React.FC = () => {
                   <DownloadIcon className="w-5 h-5" />
                   Download PDF
                 </button>
+              </div>
+
+              <div ref={previewContainerRef} className="relative w-full flex-grow bg-gray-900/50 rounded-xl border border-gray-700 overflow-y-auto flex items-start justify-center p-8 min-h-[600px] max-h-[850px]">
+                 {/* Scaling wrapper to fit A4 (210mm wide) into the UI */}
+                 <div style={{ width: `calc(210mm * ${previewScale})`, height: `calc(297mm * ${previewScale})` }}>
+                    <div className="origin-top-left transition-transform duration-300 ease-in-out" style={{ transform: `scale(${previewScale})` }}>
+                        <div className="shadow-2xl">
+                            <ReceiptPreview 
+                                ref={receiptRef} 
+                                data={receiptData} 
+                                universityInfo={universityInfo} 
+                                currency={activePreset.currency as any}
+                                locale={activePreset.locale as any}
+                            />
+                        </div>
+                    </div>
+                 </div>
+                 
+                 <div className="absolute bottom-4 right-4 bg-gray-800/80 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] text-gray-400 border border-gray-700 pointer-events-none">
+                    Preview Scale: {Math.round(previewScale * 100)}%
+                 </div>
               </div>
               <div className="mt-6 w-full max-w-2xl mx-auto">
                 <VerificationResults result={verificationResult} error={verificationError} />

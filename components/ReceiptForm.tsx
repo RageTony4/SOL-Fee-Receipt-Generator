@@ -163,7 +163,22 @@ const ReceiptForm: React.FC<ReceiptFormProps> = ({
       <fieldset className="border border-gray-700 p-4 rounded-lg">
         <legend className="text-xl font-semibold text-indigo-400 px-2">Student Information</legend>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <InputField label="Full Name" name="studentName" value={receiptData.studentName} onChange={handleReceiptChange} />
+            <InputField 
+                label="Full Name" 
+                name="studentName" 
+                value={receiptData.studentName} 
+                onChange={handleReceiptChange} 
+                endAdornment={
+                    <button 
+                        type="button" 
+                        onClick={() => handleCopy(receiptData.studentName, 'studentName')}
+                        className="text-gray-400 hover:text-indigo-400 transition-colors"
+                        title="Copy Name"
+                    >
+                        {copiedField === 'studentName' ? <ClipboardCheckIcon className="w-4 h-4 text-green-400" /> : <ClipboardIcon className="w-4 h-4" />}
+                    </button>
+                }
+            />
             <InputField label="Reg No" name="studentId" value={receiptData.studentId} onChange={handleReceiptChange} />
             <InputField label="Programme" name="programOfStudy" value={receiptData.programOfStudy} onChange={handleReceiptChange} />
             <InputField label="Admission Year" name="admissionYear" value={receiptData.admissionYear} onChange={handleReceiptChange} type="number" />
@@ -171,7 +186,23 @@ const ReceiptForm: React.FC<ReceiptFormProps> = ({
             <InputField label="Current Enrollment Term" name="currentEnrollmentTerm" value={receiptData.currentEnrollmentTerm} onChange={handleReceiptChange} />
             <InputField label="Current Term" name="currentTerm" value={receiptData.currentTerm} onChange={handleReceiptChange} />
             <InputField label="Enrollment Status" name="enrollmentStatus" value={receiptData.enrollmentStatus} onChange={handleReceiptChange} />
-            <InputField label="Email ID" name="emailId" type="email" value={receiptData.emailId} onChange={handleReceiptChange} />
+            <InputField 
+                label="Email ID" 
+                name="emailId" 
+                type="email" 
+                value={receiptData.emailId} 
+                onChange={handleReceiptChange} 
+                endAdornment={
+                    <button 
+                        type="button" 
+                        onClick={() => handleCopy(receiptData.emailId, 'emailId')}
+                        className="text-gray-400 hover:text-indigo-400 transition-colors"
+                        title="Copy Email"
+                    >
+                        {copiedField === 'emailId' ? <ClipboardCheckIcon className="w-4 h-4 text-green-400" /> : <ClipboardIcon className="w-4 h-4" />}
+                    </button>
+                }
+            />
              <div>
               <label className="block text-sm font-medium text-gray-400 mb-1">Modality</label>
               <select name="learningModality" value={receiptData.learningModality} onChange={handleReceiptChange} className="bg-gray-700 border border-gray-600 text-gray-200 p-2 rounded-lg w-full text-sm">

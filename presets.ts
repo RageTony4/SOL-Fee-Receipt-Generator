@@ -16,6 +16,50 @@ const DEFAULT_LOGO = 'https://files.catbox.moe/60tw77.png';
 const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 const getRandomItem = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
+const FIRST_NAMES = [
+    'James', 'Mary', 'Robert', 'Patricia', 'John', 'Jennifer', 'Michael', 'Linda', 'David', 'Elizabeth',
+    'William', 'Barbara', 'Richard', 'Susan', 'Joseph', 'Jessica', 'Thomas', 'Sarah', 'Christopher', 'Karen',
+    'Charles', 'Lisa', 'Daniel', 'Nancy', 'Matthew', 'Betty', 'Anthony', 'Sandra', 'Mark', 'Margaret',
+    'Donald', 'Ashley', 'Steven', 'Kimberly', 'Andrew', 'Emily', 'Paul', 'Donna', 'Joshua', 'Michelle',
+    'Kenneth', 'Carol', 'Kevin', 'Amanda', 'Brian', 'Dorothy', 'George', 'Melissa', 'Timothy', 'Deborah',
+    'Ronald', 'Stephanie', 'Edward', 'Rebecca', 'Jason', 'Sharon', 'Jeffrey', 'Laura', 'Ryan', 'Cynthia',
+    'Jacob', 'Kathleen', 'Gary', 'Amy', 'Nicholas', 'Angela', 'Eric', 'Shirley', 'Jonathan', 'Anna',
+    'Stephen', 'Brenda', 'Larry', 'Pamela', 'Justin', 'Nicole', 'Scott', 'Emma', 'Brandon', 'Helen',
+    'Benjamin', 'Samantha', 'Samuel', 'Katherine', 'Gregory', 'Christine', 'Alexander', 'Debra', 'Frank', 'Rachel',
+    'Patrick', 'Carolyn', 'Raymond', 'Janet', 'Jack', 'Catherine', 'Dennis', 'Maria', 'Jerry', 'Heather',
+    'Tyler', 'Diane', 'Aaron', 'Ruth', 'Jose', 'Julie', 'Adam', 'Olivia', 'Nathan', 'Joyce',
+    'Henry', 'Virginia', 'Douglas', 'Victoria', 'Zachary', 'Kelly', 'Peter', 'Lauren', 'Kyle', 'Christina',
+    'Ethan', 'Joan', 'Walter', 'Evelyn', 'Harold', 'Judith', 'Jeremy', 'Megan', 'Christian', 'Andrea',
+    'Keith', 'Cheryl', 'Roger', 'Hannah', 'Noah', 'Jacqueline', 'Gerald', 'Martha', 'Carl', 'Gloria',
+    'Terry', 'Teresa', 'Sean', 'Ann', 'Arthur', 'Sara', 'Austin', 'Madison', 'Christian', 'Frances',
+    'Aarav', 'Vihaan', 'Vivaan', 'Ananya', 'Diya', 'Advait', 'Ishani', 'Myra', 'Kabir', 'Saanvi',
+    'Arjun', 'Sai', 'Aavya', 'Aaryan', 'Aavya', 'Ishaan', 'Aanya', 'Prisha', 'Rohan', 'Sia',
+    'Otieno', 'Achieng', 'Ochieng', 'Anyango', 'Omondi', 'Atieno', 'Okwiri', 'Adhiambo', 'Oduor', 'Akoth',
+    'Maina', 'Wanjiku', 'Kamau', 'Nanjala', 'Kipkorir', 'Chepkirui', 'Mutua', 'Mwikali', 'Njoroge', 'Wambui'
+];
+
+const LAST_NAMES = [
+    'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez',
+    'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin',
+    'Lee', 'Perez', 'Thompson', 'White', 'Harris', 'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson',
+    'Walker', 'Young', 'Allen', 'King', 'Wright', 'Scott', 'Torres', 'Nguyen', 'Hill', 'Flores',
+    'Green', 'Adams', 'Nelson', 'Baker', 'Hall', 'Rivera', 'Campbell', 'Mitchell', 'Carter', 'Roberts',
+    'Gomez', 'Phillips', 'Evans', 'Turner', 'Diaz', 'Parker', 'Cruz', 'Edwards', 'Collins', 'Reyes',
+    'Stewart', 'Morris', 'Morales', 'Murphy', 'Cook', 'Rogers', 'Gutierrez', 'Ortiz', 'Morgan', 'Cooper',
+    'Peterson', 'Bailey', 'Reed', 'Kelly', 'Howard', 'Ramos', 'Kim', 'Cox', 'Ward', 'Richardson',
+    'Watson', 'Brooks', 'Chavez', 'Wood', 'James', 'Bennett', 'Gray', 'Mendoza', 'Ruiz', 'Hughes',
+    'Price', 'Alvarez', 'Castillo', 'Sanders', 'Patel', 'Myers', 'Long', 'Ross', 'Foster', 'Jimenez',
+    'Sharma', 'Verma', 'Gupta', 'Malhotra', 'Mehra', 'Singh', 'Kaur', 'Reddy', 'Iyer', 'Nair',
+    'Onyango', 'Kariuki', 'Mwangi', 'Kamau', 'Kiprono', 'Cheruiyot', 'Mulei', 'Waweru', 'Odhiambo', 'Okoth',
+    'Nekesa', 'Wekesa', 'Barasa', 'Simiyu', 'Juma', 'Karanja', 'Githinji', 'Njuguna', 'Muthoni', 'Njeri'
+];
+
+const generateRandomName = () => {
+    const first = getRandomItem(FIRST_NAMES);
+    const last = getRandomItem(LAST_NAMES);
+    return `${first} ${last}`.toUpperCase();
+};
+
 // --- PRINCETON UNIVERSITY ---
 const princetonInfo: UniversityInfo = {
     name: 'Princeton University',
@@ -66,6 +110,15 @@ const createInitialPrincetonData = (): ReceiptData => {
     };
 };
 
+const createRandomPrincetonData = (): ReceiptData => {
+    const data = createInitialPrincetonData();
+    data.receiptNumber = `PU-RCPT-2025-${randomInt(10000, 99999)}`;
+    data.studentId = String(randomInt(100000000, 999999999));
+    data.studentName = generateRandomName();
+    data.emailId = `${data.studentName.split(' ')[0].toLowerCase()}.${data.studentId.substring(0, 4)}@princeton.edu`;
+    return data;
+};
+
 // --- LLOYD LAW COLLEGE ---
 const lloydInfo: UniversityInfo = {
     name: 'Lloyd Law College',
@@ -114,6 +167,15 @@ const createInitialLloydData = (): ReceiptData => {
     };
 };
 
+const createRandomLloydData = (): ReceiptData => {
+    const data = createInitialLloydData();
+    data.receiptNumber = `LLC-RCPT-2025-${randomInt(10000, 99999)}`;
+    data.studentId = `LLC/BALLB/2025/${randomInt(10000, 99999)}`;
+    data.studentName = generateRandomName();
+    data.emailId = `${data.studentName.split(' ')[0].toLowerCase()}.${randomInt(10000, 99999)}@lloydlawcollege.edu.in`;
+    return data;
+};
+
 // --- UNIVERSITY OF CHILD NUTRITION ---
 const ucnInfo: UniversityInfo = {
     name: 'University of Child Nutrition',
@@ -156,6 +218,15 @@ const createInitialUCNData = (): ReceiptData => {
         supportContact: 'Contact helpdesk@theicn.org.',
         confidentialityNotice: 'Confidential.'
     };
+};
+
+const createRandomUCNData = (): ReceiptData => {
+    const data = createInitialUCNData();
+    data.receiptNumber = `UCN-RCPT-2025-${randomInt(10000, 99999)}`;
+    data.studentId = `UCN-SCN-2025-${randomInt(1000, 9999)}`;
+    data.studentName = generateRandomName();
+    data.emailId = `${data.studentName.split(' ')[0].toLowerCase()}.${randomInt(1000, 9999)}@ucn-edu.org`;
+    return data;
 };
 
 // --- PARK UNIVERSITY ---
@@ -210,7 +281,7 @@ const createRandomParkData = (): ReceiptData => {
     const data = createInitialParkData();
     data.receiptNumber = String(randomInt(100000000, 999999999));
     data.studentId = String(randomInt(1000000, 9999999));
-    data.studentName = getRandomItem(['NOAH SMITH', 'OLIVIA JONES', 'LIAM MILLER', 'SOPHIA DAVIS', 'ETHAN WILSON']);
+    data.studentName = generateRandomName();
     data.emailId = `${data.studentName.split(' ')[0].toLowerCase()}.${data.studentId.substring(0, 4)}@park.edu`;
     return data;
 };
@@ -265,10 +336,19 @@ const createInitialMasenoData = (): ReceiptData => {
     };
 };
 
+const createRandomMasenoData = (): ReceiptData => {
+    const data = createInitialMasenoData();
+    data.receiptNumber = `MSU/RCPT/2025/${randomInt(1000, 9999)}`;
+    data.studentId = `BIT/${randomInt(10000, 99999)}/025`;
+    data.studentName = generateRandomName();
+    data.emailId = `${data.studentName.split(' ')[0].toLowerCase()}@maseno.ac.ke`;
+    return data;
+};
+
 export const universityPresets: UniversityPreset[] = [
-    { id: 'princeton', name: 'Princeton University', info: princetonInfo, createInitialData: createInitialPrincetonData, createRandomData: createInitialPrincetonData, currency: 'USD', locale: 'en-US', duration: 4 },
-    { id: 'lloyd', name: 'Lloyd Law College', info: lloydInfo, createInitialData: createInitialLloydData, createRandomData: createInitialLloydData, currency: 'INR', locale: 'en-IN', duration: 5 },
-    { id: 'ucn', name: 'University of Child Nutrition', info: ucnInfo, createInitialData: createInitialUCNData, createRandomData: createInitialUCNData, currency: 'USD', locale: 'en-US', duration: 1 },
+    { id: 'princeton', name: 'Princeton University', info: princetonInfo, createInitialData: createInitialPrincetonData, createRandomData: createRandomPrincetonData, currency: 'USD', locale: 'en-US', duration: 4 },
+    { id: 'lloyd', name: 'Lloyd Law College', info: lloydInfo, createInitialData: createInitialLloydData, createRandomData: createRandomLloydData, currency: 'INR', locale: 'en-IN', duration: 5 },
+    { id: 'ucn', name: 'University of Child Nutrition', info: ucnInfo, createInitialData: createInitialUCNData, createRandomData: createRandomUCNData, currency: 'USD', locale: 'en-US', duration: 1 },
     { id: 'park', name: 'Park University', info: parkInfo, createInitialData: createInitialParkData, createRandomData: createRandomParkData, currency: 'USD', locale: 'en-US', duration: 4 },
-    { id: 'maseno', name: 'Maseno University', info: masenoInfo, createInitialData: createInitialMasenoData, createRandomData: createInitialMasenoData, currency: 'KES', locale: 'en-KE', duration: 4 },
+    { id: 'maseno', name: 'Maseno University', info: masenoInfo, createInitialData: createInitialMasenoData, createRandomData: createRandomMasenoData, currency: 'KES', locale: 'en-KE', duration: 4 },
 ];
